@@ -1,196 +1,145 @@
-Multilingual FAQ System
+# Multilingual FAQ System
+
 A Django-based web application for managing multilingual FAQs. This project supports:
 
-Multilingual Content: FAQs can be translated into multiple languages (e.g., English, Hindi, Bengali).
+*   Multilingual Content: FAQs can be translated into multiple languages (e.g., English, Hindi, Bengali).
+*   WYSIWYG Editor: Rich text editing for FAQ answers using `django-ckeditor`.
+*   REST API: A fully functional API for managing FAQs with language support.
+*   Caching: Redis-based caching for improved performance.
+*   Admin Panel: User-friendly interface for managing FAQs.
 
-WYSIWYG Editor: Rich text editing for FAQ answers using django-ckeditor.
+## Features
 
-REST API: A fully functional API for managing FAQs with language support.
+*   Dynamic translations using Google Translate API.
+*   Language-specific FAQ retrieval via API (`?lang=hi` for Hindi).
+*   Redis caching for faster responses.
+*   Docker support for easy deployment.
 
-Caching: Redis-based caching for improved performance.
+## Technologies Used
 
-Admin Panel: User-friendly interface for managing FAQs.
+*   **Backend:** Django, Django REST Framework
+*   **Database:** SQLite (default)
+*   **Caching:** Redis
+*   **Translation:** `googletrans` library
+*   **WYSIWYG Editor:** `django-ckeditor`
 
-Features
-Dynamic Translations: Automatically translate FAQs using Google Translate API.
+## Installation
 
-Language Support: Retrieve FAQs in different languages via API (?lang=hi for Hindi).
+### Prerequisites
 
-Caching: Translations are cached using Redis for faster responses.
+*   Python 3.9+
+*   Redis
 
-Admin Interface: Easily manage FAQs through Django's admin panel.
+### Steps
 
-Docker Support: Run the project locally using Docker.
+1.  **Clone the repository:**
 
-Technologies Used
-Backend: Django, Django REST Framework
+    ```bash
+    git clone [https://github.com/your-username/multilingual-faq-system.git](https://github.com/your-username/multilingual-faq-system.git)
+    cd multilingual-faq-system
+    ```
 
-Database: SQLite (default), PostgreSQL (optional)
+2.  **Create a virtual environment:**
 
-Caching: Redis
+    ```bash
+    python -m venv venv
+    ```
 
-Translation: Google Translate API (googletrans)
+3.  **Activate the virtual environment:**
 
-Frontend: Django Templates, Bootstrap (optional)
+    *   **Windows:**
 
-WYSIWYG Editor: django-ckeditor
+        ```bash
+        venv\Scripts\activate
+        ```
 
-Containerization: Docker
+    *   **Mac/Linux:**
 
-Installation
-Prerequisites
-Python 3.9+
+        ```bash
+        source venv/bin/activate
+        ```
 
-Redis
+4.  **Install dependencies:**
 
-Docker (optional)
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-Steps
-Clone the repository:
+5.  **Run migrations:**
 
-bash
-Copy
-git clone https://github.com/your-username/multilingual-faq-system.git
-cd multilingual-faq-system
-Create a virtual environment:
+    ```bash
+    python manage.py migrate
+    ```
 
-bash
-Copy
-python -m venv venv
-Activate the virtual environment:
+6.  **Create a superuser:**
 
-Windows:
+    ```bash
+    python manage.py createsuperuser
+    ```
 
-bash
-Copy
-venv\Scripts\activate
-Mac/Linux:
+7.  **Start the server:**
 
-bash
-Copy
-source venv/bin/activate
-Install dependencies:
+    ```bash
+    python manage.py runserver
+    ```
 
-bash
-Copy
-pip install -r requirements.txt
-Run migrations:
+8.  **Access:**
 
-bash
-Copy
-python manage.py migrate
-Create a superuser (admin account):
+    *   **Admin:** <http://localhost:8000/admin/>
+    *   **API:** <http://localhost:8000/api/faqs/?lang=hi>
 
-bash
-Copy
-python manage.py createsuperuser
-Start the development server:
+### Docker Setup
 
-bash
-Copy
-python manage.py runserver
-Access the application:
+1.  **Build and start containers:**
 
-Admin Panel: http://localhost:8000/admin/
+    ```bash
+    docker-compose up --build
+    ```
 
-API: http://localhost:8000/api/faqs/?lang=hi
+2.  **Access the app at:** <http://localhost:8000>
 
-Running with Docker
-Build and start the containers:
+## API Endpoints
 
-bash
-Copy
-docker-compose up --build
-Access the application:
+*   **Get all FAQs:**
 
-Admin Panel: http://localhost:8000/admin/
+    ```bash
+    GET /api/faqs/
+    ```
 
-API: http://localhost:8000/api/faqs/?lang=hi
+*   **Filter by language:**
 
-API Documentation
-Endpoints
-Get All FAQs: GET /api/faqs/
+    ```bash
+    GET /api/faqs/?lang=hi
+    ```
 
-Get FAQs by Language: GET /api/faqs/?lang=hi (replace hi with desired language code)
+## Example Response
 
-Create FAQ: POST /api/faqs/
-
-Update FAQ: PUT /api/faqs/<id>/
-
-Delete FAQ: DELETE /api/faqs/<id>/
-
-Example Request
-bash
-Copy
-curl -X GET "http://localhost:8000/api/faqs/?lang=hi"
-Response
-json
-Copy
+```json
 [
-    {
-        "id": 1,
-        "question": "नमस्ते",
-        "answer": "<p>यह एक उदाहरण उत्तर है।</p>"
-    }
+  {
+    "id": 1,
+    "question": "नमस्ते",
+    "answer": "यह एक उदाहरण उत्तर है।"
+  }
 ]
-Admin Panel
-Access the admin panel at http://localhost:8000/admin/.
+```
+##Admin Panel
 
-Log in with your superuser credentials.
+* Visit <http://localhost:8000/admin/>.
+* Log in with your superuser credentials.
+* Add/Edit FAQs with the WYSIWYG editor.
 
-Add, edit, or delete FAQs using the user-friendly interface.
-
-Caching
-Translations are cached using Redis to improve performance.
-
-To clear the cache, restart the Redis server or use the Django shell:
-
-bash
-Copy
-python manage.py shell
->>> from django.core.cache import cache
->>> cache.clear()
-Translation
-Translations are handled using the googletrans library.
-
-During FAQ creation, translations are automatically generated for supported languages (e.g., Hindi, Bengali).
-
-If a translation is unavailable, the system falls back to English.
-
-Testing
-Run tests using pytest:
-
-bash
-Copy
-pytest
-Contributing
-Fork the repository.
-
-Create a new branch:
-
-bash
-Copy
-git checkout -b feature/your-feature-name
-Commit your changes:
-
-bash
-Copy
+##Contributing
+*Fork the repository.
+*Create a branch:
+```
+git checkout -b feature/your-feature
+```
+##Commit changes:
+```
 git commit -m "feat: Add your feature"
-Push to the branch:
+```
 
-bash
-Copy
-git push origin feature/your-feature-name
-Open a pull request.
+## License
 
-License
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-Acknowledgements
-Django
-
-Django REST Framework
-
-Redis
-
-Google Translate API
+MIT License. See `LICENSE` for details.
